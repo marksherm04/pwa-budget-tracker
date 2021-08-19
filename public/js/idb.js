@@ -1,7 +1,7 @@
 // variable holds db connection
 let db;
-// establish a connection to IndexedDB database called 'pwa-budget-tracker' and set it to verison 1
-const request = indexedDB.open('pwa-budget-tracker', 1);
+// establish a connection to IndexedDB database called 'budget' and set it to verison 1
+const request = indexedDB.open('budget', 1);
 
 // this event will emit database changes
 request.onupgradeneeded = function (event) {
@@ -27,8 +27,8 @@ request.onerror = function (event) {
 	console.log(event.target.errorCode);
 };
 
-// This function will execute if we attempt to submit a new transaction and there's no internet connection
-function saveRecord(transaction) {
+// This function will execute if we attempt to submit a new record and there's no internet connection
+function saveRecord(record) {
 	// open a new transaction with the database with read and write permissions
 	const transaction = db.transaction(['new_input'], 'readwrite');
 
@@ -36,7 +36,7 @@ function saveRecord(transaction) {
 	const inputObjectStore = transaction.objectStore('new_input');
 
 	// add record to your store with add method
-	inputObjectStore.add(transaction)
+	inputObjectStore.add(record)
 }
 
 function updateBudget() {
@@ -53,7 +53,8 @@ function updateBudget() {
 	getAll.onsuccess - function () {
 		// if there was data in indexedDb's store, send it to the api server
 		if (getAll.result.length > 0) {
-			// TODO: NEED TO CHECK CODE HERE
+
+			// TODO: NEED TO CHECK CODE HERE  !!!!!
 			fetch('/routes/api.js', {
 				method: 'POST',
 				body: JSON.stringify(getAll.result),
@@ -72,7 +73,7 @@ function updateBudget() {
 					// access the new_input object store
 					const inputObjectStore = transaction.objectStore('new_input');
 					// clear all items in your store
-					pizzaObjectStore.clear();
+					inputObjectStore.clear();
 
 					alert('All saved transactions has been submitted!');
 				})
