@@ -40,6 +40,7 @@ function saveRecord(record) {
 }
 
 function updateBudget() {
+	console.log("updateBudget")
 	// open a tarnsaction on your db
 	const transaction = db.transaction(['new_input'], 'readwrite');
 
@@ -49,13 +50,16 @@ function updateBudget() {
 	// get all records from store and set to variable
 	const getAll = inputObjectStore.getAll();
 
+	// TODO: NEED TO GET RUNNING !!!!!
+
 	// upon successful .getAll() execution, run this function
-	getAll.onsuccess - function () {
+	getAll.onsuccess = function () {
+		console.log(get.getAll);
 		// if there was data in indexedDb's store, send it to the api server
 		if (getAll.result.length > 0) {
 
 			// TODO: NEED TO CHECK CODE HERE  !!!!!
-			fetch('/routes/api.js', {
+			fetch('/api/transaction/bulk', {
 				method: 'POST',
 				body: JSON.stringify(getAll.result),
 				headers: {
@@ -82,9 +86,10 @@ function updateBudget() {
 				});
 		}
 	}
-
-	// listen for app coming back online
-	window.addEventListener('online', updateBudget);
-
 }
+
+// listen for app coming back online
+window.addEventListener('online', updateBudget);
+
+
 

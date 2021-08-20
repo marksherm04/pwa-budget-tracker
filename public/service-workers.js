@@ -6,13 +6,10 @@ const CACHE_NAME = APP_PREFIX + VERSION;
 // npm run start:dev giving me an error
 
 const FILES_TO_CACHE = [
-	"./public/index.html",
-	"./server.js",
-	"./public/css/style.css",
-	"./public/js/idb.js",
-	"./public/js/index.js",
-	"./routes/api.js",
-	"./models/transaction.js",
+	"./index.html",
+	"./css/styles.css",
+	"./js/idb.js",
+	"./js/index.js",
 ];
 
 self.addEventListener('fetch', function (e) {
