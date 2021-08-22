@@ -45,16 +45,16 @@ function updateBudget() {
 	const transaction = db.transaction(['new_input'], 'readwrite');
 
 	// access your object store
-	const inputObjectStore = transaction.objectStore('new_input');
+	const inputStore = transaction.objectStore('new_input');
 
 	// get all records from store and set to variable
-	const getAll = inputObjectStore.getAll();
+	const getAll = inputStore.getAll();
 
 	// TODO: NEED TO GET RUNNING !!!!!
 
 	// upon successful .getAll() execution, run this function
 	getAll.onsuccess = function () {
-		console.log(get.getAll);
+		console.log(getAll);
 		// if there was data in indexedDb's store, send it to the api server
 		if (getAll.result.length > 0) {
 
@@ -69,9 +69,8 @@ function updateBudget() {
 			})
 				.then(response => response.json())
 				.then(serverResponse => {
-					if (serverResponse.message) {
-						throw new Error(serverResponse);
-					}
+					console.log(serverResponse);
+
 					// open one more transaction
 					const transaction = db.transaction(['new_input'], 'readwrite');
 					// access the new_input object store
